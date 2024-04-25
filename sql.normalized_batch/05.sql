@@ -1,21 +1,17 @@
 /*
  * Calculates the hashtags that are commonly used for English tweets containing the word "coronavirus"
  */
-SELECT
+select
     tag,
     count(*) AS count
-FROM (
-    SELECT DISTINCT
+from (
+    select distinct
         id_tweets,
         tag
-    FROM tweets
-    JOIN tweet_tags USING (id_tweets)
-    WHERE to_tsvector('english',text)@@to_tsquery('english','coronavirus')
-      AND lang='en'
-) t
-GROUP BY tag
-ORDER BY count DESC,tag
-LIMIT 1000
-;
-
-
+    from tweets
+    join tweet_tags using (id_tweets)
+    where to_tsvector('english',text)@@to_tsquery('english','coronavirus') and lang='en'
+) as t
+group by tag
+order by count desc,tag
+limit 1000;

@@ -3,4 +3,6 @@
  */
 select count(*)
 from tweets_jsonb
-where tags LIKE '%#coronavirus%';
+where
+    data->'entities'->'hashtags' @> '[{"text": "coronavirus"}]'
+    or data->'extended_tweet'->'entities'->'hashtags' @> '[{"text": "coronavirus"}]';
